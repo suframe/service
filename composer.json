@@ -1,0 +1,11 @@
+{
+    "name": "suframe/server",
+    "description": "suframe server",
+    "authors": [
+        {
+            "name": "qian",
+            "email": "330576744@qq.com"
+        }
+    ],
+    "require": {}
+}
