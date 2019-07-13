@@ -1,21 +1,40 @@
-# summer server
+suframe service
+===============
+基于swoole的轻量rpc微服务
 
-#### 介绍
-基于swoole开发的一个轻量级框架,server端
+## 主要功能
 
-#### 软件架构
-软件架构说明:http://www.zacms.com/index.php/archives/340/
+* 提供http rest接口
+* 提供rpc接口
+* rpc连接池
+* 自动注册到suframe/proxy代理中心
+* 自动生成rpc接口ide提示
 
-#### todo
- - server创建，compser create '**' server1,通过命令行一键创建。
- - 修改配置manage地址和端口，填写注册名称
- - 启动服务
- - 开始开发
- - 脚手架
+## 约定
 
-#### 安装教程
+* 基于tcp协议提供服务，rest接口通过proxy代理访问，rpc通过 SRpc::route('路由')进行访问
+* 接口path和api路径约定一致，不单独配置路由表
 
-#### 使用说明
 
-#### 参与贡献
+## 安装
 
+~~~
+composer require suframe/suframe-service
+~~~
+
+## 命名规范
+
+遵循PSR-2命名规范和PSR-4自动加载规范。
+
+## 参与开发
+
+QQ群：904592189
+
+
+## 版权信息
+
+suframe遵循Apache2开源协议发布，并提供免费使用。
+
+版权所有Copyright © 2019- by qian <330576744@qq.com>
+
+All rights reserved。
