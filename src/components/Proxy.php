@@ -21,14 +21,13 @@ class Proxy
         $isRpc = false;
         if ($apiName[0] === 'summer') {
             $nameSpace = '\suframe\service\api\\';
-            array_shift($apiName);
         } else if($apiName[0] === 'rpc'){
             $isRpc = true;
             $nameSpace = Config::getInstance()->get('app.rpcNameSpace');
-            array_shift($apiName);
         } else {
             $nameSpace = Config::getInstance()->get('app.apiNameSpace');
         }
+        array_shift($apiName);
 
         $className = array_pop($apiName);
         $className = ucfirst($className);
