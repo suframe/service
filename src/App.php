@@ -60,7 +60,7 @@ class App
         $this->io->success('ra server is running');
         $ip = swoole_get_local_ip();
         $listen = $this->config['server']['listen'] == '0.0.0.0' ? array_shift($ip) : $this->config['server']['listen'];
-        $this->io->text('<info>ra server:</info> ' . $listen . ':' . $this->config['server']['port']);
+        $this->io->text('<info>server:</info> ' . $listen . ':' . $this->config['server']['port']);
 
         //注册服务
         go(function () use ($listen){
