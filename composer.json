@@ -1,23 +1,25 @@
 {
-    "name": "suframe/service",
-    "description": "suframe service",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "qian",
-            "email": "330576744@qq.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "suframe\\service\\": "src"
-        }
-    },
-    "require": {
-        "suframe/core": "dev-master",
-        "ext-inotify": "*"
-    },
-    "require-dev": {
-        "swoole/ide-helper": "@dev"
+  "name": "suframe/service",
+  "description": "suframe service",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "qian",
+      "email": "330576744@qq.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "suframe\\service\\": "src"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "suframe/core": "dev-master@dev",
+    "ext-inotify": "*"
+  },
+  "require-dev": {
+    "swoole/ide-helper": "@dev"
+  }
 }
