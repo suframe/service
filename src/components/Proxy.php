@@ -4,6 +4,7 @@ namespace suframe\service\components;
 use Exception;
 use suframe\core\components\Config;
 use suframe\core\components\rpc\RpcUnPack;
+use suframe\core\components\swoole\Context;
 use suframe\core\traits\Singleton;
 
 class Proxy
@@ -56,10 +57,15 @@ class Proxy
         if($isRpc){
             $parmas = $pack->get();
             unset($parmas['path']);
+            if(isset($parmas['x_request_id'])){
+                Context::put('x_request_id', $parmas['x_request_id']);
+                unset($parmas['x_request_id']);
+            }
             $rs = $api->$methodName(...$parmas);
             return $rs;
         }
         $parmas = $pack->get();
+        Context::put('request', $parmas);
         $rs = $api->$methodName($parmas);
         return $rs;
     }
