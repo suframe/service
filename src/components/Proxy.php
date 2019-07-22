@@ -4,9 +4,11 @@ namespace suframe\service\components;
 use Exception;
 use suframe\core\components\Config;
 use suframe\core\components\rpc\RpcUnPack;
+use suframe\core\traits\Singleton;
 
 class Proxy
 {
+    use Singleton;
     /**
      * 服务代理转发
      * @param $data

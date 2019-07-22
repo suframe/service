@@ -2,6 +2,7 @@
 namespace suframe\service\api\client;
 
 use suframe\core\components\register\Client as ClientAlias;
+use suframe\core\components\swoole\ProcessTools;
 
 class Notify
 {
@@ -22,7 +23,11 @@ class Notify
      * @throws \Exception
      */
     protected function updateServers(){
-        return ClientAlias::getInstance()->commandUpdateServers();
+        $rs = ClientAlias::getInstance()->commandUpdateServers();
+        //重启服务
+        var_dump('restart');
+        ProcessTools::kill();
+        return $rs;
     }
 
 }

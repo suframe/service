@@ -22,10 +22,6 @@ class App
      * @var SymfonyStyle
      */
     protected $io;
-    /**
-     * @var Proxy
-     */
-    protected $proxy;
 
     /**
      * @throws \Exception
@@ -35,8 +31,6 @@ class App
         $config = Config::getInstance();
         $tcp = new Server();
         $this->config = $config->get('tcp')->toArray();
-		//设置代理
-		$this->initProxy();
         //守护进程运行
         if (true === $input->hasParameterOption(['--daemon', '-d'], true)) {
             $this->config['swoole']['daemonize'] = 1;
@@ -81,10 +75,9 @@ class App
      * @throws \Exception
      */
     public function onReceiveTcp(\Swoole\Server $server, $fd, $reactor_id, $data) {
-        var_dump($data);
         EventManager::get()->trigger('tcp.request', $this, ['data' => &$data]);
         try {
-            $out = $this->proxy->dispatch($data);
+            $out = Proxy::getInstance()->dispatch($data);
         } catch (\Exception $e) {
             return Out::error($server, $fd, $e->getMessage());
         }
@@ -106,10 +99,5 @@ class App
     public function onShutdown() {
         EventManager::get()->trigger('tcp.shutDown', $this);
     }
-
-	protected function initProxy(){
-		//这里应该是action代理
-		$this->proxy = new Proxy();
-	}
 
 }
