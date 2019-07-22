@@ -75,6 +75,7 @@ class App
      * @throws \Exception
      */
     public function onReceiveTcp(\Swoole\Server $server, $fd, $reactor_id, $data) {
+        $data = substr($data,4);
         EventManager::get()->trigger('tcp.request', $this, ['data' => &$data]);
         try {
             $out = Proxy::getInstance()->dispatch($data);
