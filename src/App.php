@@ -48,22 +48,20 @@ class App
 
     /**
      * 服务启动回调
-     * @throws \Exception
+     * @param \Swoole\Server $server
      */
-    public function onStart() {
+    public function onStart(\Swoole\Server $server) {
         $this->io->success('ra server is running');
         $ip = swoole_get_local_ip();
         $listen = $this->config['server']['listen'] == '0.0.0.0' ? array_shift($ip) : $this->config['server']['listen'];
         $this->io->text('<info>server:</info> ' . $listen . ':' . $this->config['server']['port']);
 
-        //注册服务
-        go(function () use ($listen){
-            RegisterClient::getInstance()->register([
-                'path' => Config::getInstance()->get('app.path'),
-                'ip' => $listen,
-                'port' => $this->config['server']['port'],
-            ]);
-        });
+        EventManager::get()->trigger('tcp.start', $this, [
+            'server' => $server,
+            'ip' => $listen,
+            'path' => Config::getInstance()->get('app.path'),
+            'port' => $this->config['server']['port'],
+        ]);
     }
 
     /**
