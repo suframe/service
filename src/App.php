@@ -23,12 +23,16 @@ class App
      */
     protected $io;
 
+    protected $hasLog = false;
     /**
      * @throws \Exception
      */
     public function run(InputInterface $input, OutputInterface $output) {
         $this->io = new SymfonyStyle($input, $output);
         $config = Config::getInstance();
+        //是否启用日志
+        $this->hasLog = $config->get('app.log');
+
         $tcp = new Server();
         $this->config = $config->get('tcp')->toArray();
         //守护进程运行
@@ -74,19 +78,23 @@ class App
      */
     public function onReceiveTcp(\Swoole\Server $server, $fd, $reactor_id, $data) {
         EventManager::get()->trigger('tcp.request', $this, ['data' => &$data]);
+        $rs = null;
         try {
             $out = Proxy::getInstance()->dispatch($data);
         } catch (\Exception $e) {
-            return Out::error($server, $fd, $e->getMessage());
+            $rs = Out::error($server, $fd, $e->getMessage());
         }
-        if (!$out) {
-            return Out::notFound($server, $fd);
+        if ($out === null) {
+            $rs =  Out::notFound($server, $fd);
         }
-        Out::success($server, $fd, $out);
+        if(!$rs){
+            Out::success($server, $fd, $out);
+        }
         go(function () use ($data, $out){
-            EventManager::get()->trigger('tcp.response.after', $this, [
+            EventManager::get()->trigger('tcp.receive.after', $this, [
                 'request' => $data,
                 'out' => $out,
+                'hasLog' => $this->hasLog,
             ]);
         });
     }

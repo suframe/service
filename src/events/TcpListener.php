@@ -7,7 +7,9 @@
 namespace suframe\service\events;
 
 use suframe\core\components\Config;
+use suframe\core\components\log\LogConfig;
 use suframe\core\components\register\Client as RegisterClient;
+use suframe\core\components\rpc\SRpc;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -23,6 +25,7 @@ class TcpListener implements ListenerAggregateInterface {
 	 */
 	public function attach(EventManagerInterface $events, $priority = 1) {
 		$this->listeners[] = $events->attach('tcp.start', [$this, 'start'], $priority);
+		$this->listeners[] = $events->attach('tcp.receive.after', [$this, 'receiveAfter'], $priority);
 	}
 
 	/**
@@ -41,6 +44,23 @@ class TcpListener implements ListenerAggregateInterface {
         });
 	}
 
+	public function receiveAfter(EventInterface $e){
+        $hasLog = $e->getParam('hasLog');
+        if($hasLog){
+            return $this->sendLog($e);
+        }
+    }
+
+    private function sendLog(EventInterface $e){
+	    $request = $e->getParam('request');
+        $out = $e->getParam('out');
+        if(is_string($request)){
+            $request = json_decode($request, true);
+        }
+        $request['_status'] = $out['status'] ?? 404;
+        $request['_data'] = $out['data'] ?? null;
+        SRpc::route('/log/Server')->write(LogConfig::TYPE_RPC, $request, 'rpc');
+    }
     /**
      * 监听文件变化，动态reload
      * @param EventInterface $e

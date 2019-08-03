@@ -50,7 +50,6 @@ class Proxy
         }
 
         $api = new $apiClass;
-
         if (!method_exists($api, $methodName)) {
             throw new Exception('api method not found:' . $methodName);
         }
