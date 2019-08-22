@@ -23,15 +23,12 @@ class App
      */
     protected $io;
 
-    protected $hasLog = false;
     /**
      * @throws \Exception
      */
     public function run(InputInterface $input, OutputInterface $output) {
         $this->io = new SymfonyStyle($input, $output);
         $config = Config::getInstance();
-        //是否启用日志
-        $this->hasLog = $config->get('app.log');
 
         $tcp = new Server();
         $this->config = $config->get('tcp')->toArray();
@@ -93,8 +90,7 @@ class App
         go(function () use ($data, $out){
             EventManager::get()->trigger('tcp.receive.after', $this, [
                 'request' => $data,
-                'out' => $out,
-                'hasLog' => $this->hasLog,
+                'out' => $out
             ]);
         });
     }
