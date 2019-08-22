@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+use suframe\service\Core;
+
+$loader = require_once __DIR__ . '/../../vendor/autoload.php';
+defined('SUMMER_APP_ROOT') or define('SUMMER_APP_ROOT', __DIR__ . '/');
+$loader->addPsr4("app\\", SUMMER_APP_ROOT);
+$summer = Core::getInstance()->init();
+//启动控制台
+try {
+    $summer->run();
+} catch (ReflectionException|\Exception $e) {
+    echo $e->getMessage(), "\n";
+}

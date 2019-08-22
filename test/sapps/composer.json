@@ -1,0 +1,12 @@
+{
+    "name": "administrator/log",
+    "authors": [
+        {
+            "name": "shulinqian",
+            "email": "330576744@qq.com"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^1.4"
+    }
+}
