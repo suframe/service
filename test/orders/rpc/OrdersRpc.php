@@ -17,10 +17,11 @@ class OrdersRpc
      * @param string $name
      * @return string
      */
-    public function getList(string $name): array
+    public function getList(string $name = null): array
     {
-        $id = Context::get('x_request_id');
-        return ['hello ' . $name . ':' . $id];
+        $request = Context::get('request');
+        $x_request_id = $request['x_request_id'] ?? '';
+        return ['hello ' . $name . ':' . $x_request_id];
     }
 
 }
