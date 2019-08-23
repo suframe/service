@@ -5,5 +5,6 @@ return [
     'tcp' => require __DIR__ . '/tcp.php',
     'listener' => require __DIR__ . '/listener.php',
     'watch' => require __DIR__ . '/watch.php',
+    'sapps' => require __DIR__ . '/sapps.php',
     'servers' => [],
 ];

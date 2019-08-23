@@ -54,13 +54,12 @@ class Proxy
             throw new Exception('api method not found:' . $methodName);
         }
         if($isRpc){
-            $parmas = $pack->get();
-            unset($parmas['path']);
-            if(isset($parmas['x_request_id'])){
-                Context::put('x_request_id', $parmas['x_request_id']);
-                unset($parmas['x_request_id']);
+            $x_request_id = $pack->get('x_request_id');
+            if($x_request_id){
+                Context::put('x_request_id', $x_request_id);
             }
-            $rs = $api->$methodName(...$parmas);
+            $arguments = $parmas['arguments'] ?? [];
+            $rs = $api->$methodName(...$arguments);
             return $rs;
         }
         $parmas = $pack->get();

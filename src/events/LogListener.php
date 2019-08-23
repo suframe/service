@@ -7,9 +7,7 @@
 namespace suframe\service\events;
 
 use suframe\core\components\Config;
-use suframe\core\components\log\LogConfig;
-use suframe\core\components\register\Client as RegisterClient;
-use suframe\core\components\rpc\SRpc;
+use suframe\core\components\log\Log;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -27,7 +25,7 @@ class LogListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->logRoute = Config::getInstance()->get('app.log');
+        $this->logRoute = Config::getInstance()->get('sapps.log');
         if ($this->logRoute) {
             $this->listeners[] = $events->attach('tcp.receive.after', [$this, 'receiveAfter'], $priority);
         }
@@ -42,7 +40,9 @@ class LogListener implements ListenerAggregateInterface
         }
         $request['_status'] = $out['status'] ?? 404;
         $request['_data'] = $out['data'] ?? null;
-        SRpc::route($this->logRoute)->write(LogConfig::TYPE_RPC, $request, 'rpc');
+
+        var_dump($request);
+        Log::getInstance()->rpc($request['path'], $request, 'rpc');
     }
 
 }

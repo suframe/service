@@ -7,7 +7,6 @@ use suframe\core\components\console\SymfonyStyle;
 use suframe\core\components\event\EventManager;
 use suframe\core\components\net\tcp\Out;
 use suframe\core\components\net\tcp\Server;
-use suframe\core\components\register\Client as RegisterClient;
 use suframe\core\traits\Singleton;
 use suframe\service\components\Proxy;
 use Symfony\Component\Console\Input\InputInterface;
@@ -85,12 +84,12 @@ class App
             $rs =  Out::notFound($server, $fd);
         }
         if(!$rs){
-            Out::success($server, $fd, $out);
+            $rs = Out::success($server, $fd, $out);
         }
-        go(function () use ($data, $out){
+        go(function () use ($data, $rs){
             EventManager::get()->trigger('tcp.receive.after', $this, [
                 'request' => $data,
-                'out' => $out
+                'out' => $rs
             ]);
         });
     }
