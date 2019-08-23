@@ -12,8 +12,6 @@ return array(
             'port' => '8082',
         ),
     ),
-    '/log' => array(),
-    '/summer' => array(),
     '/sapps' => array(
         'd170e1eec2aac39860df647bf88ee927' => array(
             'ip' => '192.168.1.41',
