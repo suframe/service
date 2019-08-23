@@ -2,5 +2,5 @@
 
 return [
     'path' => '/orders',
-    'log' => '/log',
+    'log' => '/sapps/Log',
 ];

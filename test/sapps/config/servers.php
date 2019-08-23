@@ -13,7 +13,8 @@ return array(
         ),
     ),
     '/log' => array(),
-    '/summer' => array(
+    '/summer' => array(),
+    '/sapps' => array(
         'd170e1eec2aac39860df647bf88ee927' => array(
             'ip' => '192.168.1.41',
             'port' => '9051',
