@@ -40,8 +40,6 @@ class LogListener implements ListenerAggregateInterface
         }
         $request['_status'] = $out['status'] ?? 404;
         $request['_data'] = $out['data'] ?? null;
-
-        var_dump($request);
         Log::getInstance()->rpc($request['path'], $request, 'rpc');
     }
 

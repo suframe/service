@@ -33,7 +33,6 @@ class Log
         //过滤,log自己就不用记录了
         if(($type == LogConfig::TYPE_REQUEST) && isset($data['request_uri'])){
             $selPath = Config::getInstance()->get('app.path');
-            var_dump(strpos($data['request_uri'], $selPath));
             if(strpos($data['request_uri'], $selPath) === 0){
                 return null;
             }
