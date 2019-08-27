@@ -2,5 +2,8 @@
 return [
     'path' => '/sapps',
     'log' => '/sapps/Log',
-    'config' => '/sapps/Config',
+    'config' => [
+        'path' => '/sapps/Config',
+        'key' => 'demo'
+    ],
 ];

@@ -3,7 +3,6 @@
 namespace app\rpc;
 
 use app\compoents\log\Store;
-use MongoDB\Collection;
 use MongoDB\InsertOneResult;
 use suframe\core\components\Config;
 use suframe\core\components\log\LogConfig;
