@@ -33,7 +33,7 @@ class App
         $this->config = $config->get('tcp')->toArray();
         //守护进程运行
         if (true === $input->hasParameterOption(['--daemon', '-d'], true)) {
-            $this->config['swoole']['daemonize'] = 1;
+            $this->config['server']['options']['daemonize'] = 1;
         }
         //创建启动服务
         $tcp->create($this->config);
